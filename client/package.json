@@ -85,5 +85,11 @@
     "node": ">=8.0.0"
   },
   "title": "文章管理平台",
-  "templateType": "koa2"
+  "templateType": "koa2",
+  "proxyConfig": {
+    "/api": {
+      "enable": true,
+      "target": "http://localhost:3001"
+    }
+  }
 }

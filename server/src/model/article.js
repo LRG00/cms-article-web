@@ -21,5 +21,13 @@ const articleSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  createTime: {
+    type: Date,
+    default: Date.now,
+  },
+  updateTime: {
+    type: Date,
+    default: Date.now,
+  },
 });
 module.exports = mongoose.model('Article', articleSchema);

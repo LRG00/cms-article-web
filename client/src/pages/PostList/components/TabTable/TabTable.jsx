@@ -47,10 +47,16 @@ export default class TabTable extends Component {
         key: 'status',
         width: 150,
       },
+      // {
+      //   title: '发布时间',
+      //   dataIndex: 'date',
+      //   key: 'date',
+      //   width: 150,
+      // },
       {
-        title: '发布时间',
-        dataIndex: 'date',
-        key: 'date',
+        title: '创建时间',
+        dataIndex: 'createTime',
+        key: 'createTime',
         width: 150,
       },
       {
@@ -76,18 +82,29 @@ export default class TabTable extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get('/mock/tab-table.json')
-      .then((response) => {
+    // axios
+    //   .get('/mock/tab-table.json')
+    //   .then((response) => {
+    //     this.setState({
+    //       dataSource: response.data.data,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    axios({
+      url: 'http://localhost:3001/users/article-list?title=""',
+      method: 'post',
+      data: { title: '' }
+    })
+      .then((res) => {
+        console.log(res.data.results)
         this.setState({
-          dataSource: response.data.data,
+          dataSource: { all: res.data.results },
         });
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((err) => {});
   }
-
   getFormValues = (dataIndex, values) => {
     const { dataSource, tabKey } = this.state;
     dataSource[tabKey][dataIndex] = values;
