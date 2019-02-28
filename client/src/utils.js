@@ -1,26 +1,13 @@
 import axios from 'axios';
 
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL ='/api';
+axios.defaults.baseURL = '/api';
 
-
-//http request 拦截器
-axios.interceptors.request.use(
-  config => {
-    // const token = getCookie('名称');注意使用的时候需要引入cookie方法，推荐js-cookie
-    config.data = JSON.stringify(config.data);
-    config.headers = {
-      'Content-Type':'application/x-www-form-urlencoded'
-    }
-    // if(token){
-    //   config.params = {'token':token}
-    // }
-    return config;
-  },
-  error => {
-    return Promise.reject(err);
-  }
-);
+axios.interceptors.request.use(config => {
+  const token = localStorage.getItem('token');
+  config.headers.common['Authorization'] = 'Bearer ' + token;
+  return config;
+})
 
 
 //http response 拦截器
@@ -35,6 +22,13 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
+    console.log('xxx', error.response.status)
+    if(error.response.status === 401){
+      console.log('请重新登录')
+      // Router.push({
+      //   path:"/login"
+      // })
+    }
     return Promise.reject(error)
   }
 )
@@ -70,8 +64,12 @@ export function fetch(url,params={}){
  */
 
  export function post(url,data = {}){
+   console.log(url, 'ddd')
    return new Promise((resolve,reject) => {
-     axios.post(url,data)
+     axios.post('article-list',{
+      "username": "李瑞钢",
+      "passwd": "123456"
+    })
           .then(response => {
             resolve(response.data);
           },err => {

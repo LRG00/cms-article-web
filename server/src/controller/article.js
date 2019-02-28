@@ -3,7 +3,7 @@ const router = require('koa-router')()
 const Person = require('../model/article')
 
 
-router.prefix('/users')
+router.prefix('/api')
 
 router.get('/', function (ctx, next) {
   ctx.body = 'this is a users response!'

@@ -1,5 +1,6 @@
 /* eslint react/no-string-refs:0 */
 import React, { Component } from 'react';
+import axios from 'axios';
 import { withRouter, Link } from 'react-router-dom';
 import { Input, Button, Checkbox, Message } from '@alifd/next';
 import {
@@ -41,9 +42,19 @@ class UserLogin extends Component {
         console.log('errors', errors);
         return;
       }
-      console.log(values);
-      Message.success('登录成功');
-      this.props.history.push('/');
+      // console.log(values);
+      // Message.success('登录成功');
+      // this.props.history.push('/');
+      axios.post('/login1', { passwd: values.password, username: values.username }).then(res => {
+        console.log(res, 'ooo')
+        if(res.data.code === '000001'){
+          localStorage.setItem('token', res.data.data);
+          localStorage.setItem('token_exp', new Date().getTime());
+          this.props.history.push('/');
+        }else{
+          console.log(res.data.msg);
+        }
+      })
     });
   };
 

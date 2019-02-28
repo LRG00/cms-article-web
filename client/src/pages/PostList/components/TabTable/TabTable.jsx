@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
 import { Tab } from '@alifd/next';
 import axios from 'axios';
+import { post } from '../../../../utils';
 import CustomTable from './components/CustomTable';
 import EditDialog from './components/EditDialog';
 import DeleteBalloon from './components/DeleteBalloon';
@@ -92,18 +93,12 @@ export default class TabTable extends Component {
     //   .catch((error) => {
     //     console.log(error);
     //   });
-    axios({
-      url: 'http://localhost:3001/users/article-list?title=""',
-      method: 'post',
-      data: { title: '' }
+    post('/users/article-list').then(res => {
+      console.log(res.results)
+      this.setState({
+        dataSource: { all: res.results },
+      });
     })
-      .then((res) => {
-        console.log(res.data.results)
-        this.setState({
-          dataSource: { all: res.data.results },
-        });
-      })
-      .catch((err) => {});
   }
   getFormValues = (dataIndex, values) => {
     const { dataSource, tabKey } = this.state;
