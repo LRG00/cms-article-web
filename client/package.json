@@ -28,7 +28,7 @@
     "immutable": "^3.8.2",
     "is-hotkey": "^0.1.1",
     "moment": "^2.23.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.5.8",
     "rc-queue-anim": "^1.6.5",
     "rc-scroll-anim": "^2.5.5",
